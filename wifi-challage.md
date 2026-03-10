@@ -1,10 +1,9 @@
 # Recon
 
 ## 01. List all client MACs
-List all client MACs and get the MAC of the wifi-global client. FLAG: the wifi-global client MAC
+> List all client MACs and get the MAC of the wifi-global client. FLAG: the wifi-global client MAC
 
 ### Solution :
-
 Set wlan to monitor mode
 ```
 sudo airmon-ng start wlan0
@@ -22,10 +21,10 @@ After that, we can execute airodump-ng to capture all traffic and list APs and c
 airodump-ng wlan0mon -w scan --manufacturer --wps --band abg
 ```
 
--w -> to save the output to scan file 
---manufacturer -> Display manufacturer from IEEE OUI list 
---wps -> Display WPS information (if any) 
---band abg -> to scan 2.4Ghz and 5Ghz
+> -w -> to save the output to scan file 
+> --manufacturer -> Display manufacturer from IEEE OUI list 
+> --wps -> Display WPS information (if any) 
+> --band abg -> to scan 2.4Ghz and 5Ghz
 
 As we can see the AP wifi-global is in channel 44, so we can exec airodump only in this channel.
 
@@ -34,7 +33,6 @@ airodump-ng wlan0mon -w scan --manufacturer --wps -c44
 ```
 
 We can use TAB, to "enabled AP selection" and choose and AP.
-
 
 We can search in two channels using:
 ```
@@ -45,27 +43,23 @@ We can use wifi_db to get this information processing the airodump-ng captures.
 
 
 ## 02. Detect APs information
-Detect APs information FLAG: wifi-corp channel
+> Detect APs information FLAG: wifi-corp channel
 
 ### Solution :
+
 Using the last challenge airodump-ng we can see the wifi-corp channel
-
-
 And using wifi_db.
 
-
 ## 03. Get probes from users
-
-Get the probes of client with MAC: 78:C1:A7:BF:72:66
+> Get the probes of client with MAC: 78:C1:A7:BF:72:66
 
 ### Solution :
 If we use wifi_db we can open the probe table and get the ESSID.
 
-
 Or we can use the airodump-ng capture.
 
 ## 04. Find hidden network ESSID
-Find hidden network ESSID (mac F0:9F:C2:71:22:11).
+> Find hidden network ESSID (mac F0:9F:C2:71:22:11).
 
 ### Solution :
 If there are client, we can wait to a client connection to get de ESSID, but if there isn't we can brute force probes to get the name with mdk4.
@@ -77,8 +71,11 @@ iwconfig wlan0mon channel 1
 mdk4 wlan0mon p -t F0:9F:C2:71:22:11 -f ~/rockyou.txt
 ```
 
+
+# OPN
+
 ## 05. Access to wifi-guest network
-Access to wifi-guest network. After connecting, what is the bypassed security mechanism to connect called? (With space and English)
+> Access to wifi-guest network. After connecting, what is the bypassed security mechanism to connect called? (With space and English)
 
 ### Solution :
 To connect to an OPEN wifi using wpa_supplicant we have to create the following open.conf file.
@@ -89,7 +86,6 @@ network={
 }
 ```
 And execute it using:
-
 ```
 wpa_supplicant -Dnl80211 -iwlan2 -c open.conf
 ```
@@ -97,7 +93,6 @@ wpa_supplicant -Dnl80211 -iwlan2 -c open.conf
 The APs is rejecting the connection, so the AP has a MAC whitelist to connect. This is not common, but many Captive Portals use the MAC to gran access to internet. So is the same principle.
 
 To connect we have to get a valid MAC and change ours. As we see before the AP has 3 clients:
-
 
 To change MAC:
 ```
@@ -109,18 +104,19 @@ ip link set wlan2 up
 
 Now, we are connected, and we have IP using "dhclient".
 
+```
+dhclient
+```
 
 so, the bypassed security mechanism is "Mac filtering"
 
 ## 06. Login to the server with user’s password
-Login to the server with user’s password. To do this, obtain the credentials of one of the free users and access the router. Write the FLAG.
+> Login to the server with user’s password. To do this, obtain the credentials of one of the free users and access the router. Write the FLAG.
 
 ### Solution :
 We can find several HTTP POST messages with a user and a pass from the IP range 192.168.0.0/24 to the IP 192.168.0.1.
 
-
 We can use pcapFilter instead of Wireshark.
-
 
 and now we can login to the Router and get the FLAG.
 
@@ -128,7 +124,7 @@ and now we can login to the Router and get the FLAG.
 # WEP
 
 ## 07. Get hidden wifi password
-Get hidden wifi password. FLAG: Pass in hex
+> Get hidden wifi password. FLAG: Pass in hex
 
 ### Solution
 we can use besside-ng to do the attack.
@@ -145,10 +141,8 @@ mdk4 wlan0mon p -t F0:9F:C2:71:22:11 -f ~/rockyou.txt
 
 # PSK
 
-
-
 ## 08. Get wifi-mobile password
-Get wifi-mobile password
+> Get wifi-mobile password
 
 ### Solution :
 We verify that there are connected clients with:
