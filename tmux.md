@@ -127,4 +127,29 @@ bind r source-file ~/.tmux.conf \; display-message "Konfigurasi dimuat ulang!"
 
 ---
 
-Apakah Anda ingin saya melengkapi *cheatsheet* di atas dengan daftar pintasan untuk **Manajemen Window** (membuat dan berpindah tab layar penuh)?
+
+### current Settings
+```bash
+# change prefix from 'Ctrl-b' to 'Ctrl-Space'
+
+unbind C-b
+set-option -g prefix C-Space
+bind-key C-Space send-prefix
+bind h split-window -h -c "#{pane_current_path}"
+bind v split-window -v -c "#{pane_current_path}"
+
+
+# Mouse support
+set -g mouse on
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-selection-no-clear
+unbind -n MouseDown3Pane
+
+# Vi mode for copy
+set -g mode-keys vi
+
+# Copy-mode bindings
+bind -T copy-mode-vi Space send -X begin-selection
+bind -T copy-mode-vi v send -X begin-selection
+bind -T copy-mode-vi y send -X copy-selection
+bind -T copy-mode-vi Enter send -X copy-selection
+```
