@@ -26,3 +26,10 @@ fi
 export TERM=xterm-256color
 export COLORTERM=truecolor
 ```
+### bash custom color 
+
+```
+#Permissions Color
+export LS_COLORS="$LS_COLORS:ow=37;41:"
+
+```
