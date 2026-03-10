@@ -14,7 +14,7 @@ PS1='[\[\e[36m\]\A\[\e[0m\]] \[\e[1;32m\]\u\[\e[0m\]: \[\e[0;37m\]\W\[\e[0m\] âž
 
 ```
 if [ -n "$TMUX" ]; then
-    PS1='\[\e[36m\]\A\[\e[0m\] \[\e[1;32m\]\u\[\e[0m\]: \[\e[0;37m\]\W\[\e[0m\] \[\e[0m\]âž¤ '
+    PS1=...
 fi
 ```
 
@@ -65,4 +65,3 @@ reload
 bind -f ~/.inputrc
 ```
 to use, type command and press CTRL+r
-
