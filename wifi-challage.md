@@ -21,10 +21,10 @@ After that, we can execute airodump-ng to capture all traffic and list APs and c
 airodump-ng wlan0mon -w scan --manufacturer --wps --band abg
 ```
 
-> -w -> to save the output to scan file.
-> --manufacturer -> Display manufacturer from IEEE OUI list.
-> --wps -> Display WPS information (if any).
-> --band abg -> to scan 2.4Ghz and 5Ghz.
+- `-w` -> to save the output to scan file.
+- `--manufacturer` -> Display manufacturer from IEEE OUI list.
+- `--wps` -> Display WPS information (if any).
+- `--band abg` -> to scan 2.4Ghz and 5Ghz.
 
 As we can see the AP wifi-global is in channel 44, so we can exec airodump only in this channel.
 
@@ -48,7 +48,7 @@ We can use wifi_db to get this information processing the airodump-ng captures.
 ### Solution :
 
 Using the last challenge airodump-ng we can see the wifi-corp channel
-And using wifi_db.
+And using `wifi_db`.
 
 ## 03. Get probes from users
 > Get the probes of client with MAC: 78:C1:A7:BF:72:66
