@@ -18,12 +18,10 @@ Solusi: Gunakan parameter: --osinfo debian12
 
 Atau: --osinfo linux2022
 
-Contoh perintah: virt-install --name proxmox --ram 8192 --vcpus 4 --cpu
-host-passthrough --disk
-path=/var/lib/libvirt/images/proxmox.qcow2,size=64,format=qcow2 --cdrom
-/path/to/proxmox.iso --network network=default --graphics vnc --osinfo
-debian12
-
+Contoh perintah: 
+```
+virt-install --name proxmox --ram 8192 --vcpus 4 --cpu host-passthrough --disk path=/var/lib/libvirt/images/proxmox.qcow2,size=64,format=qcow2 --cdrom /path/to/proxmox.iso --network network=default --graphics vnc --osinfo debian12
+```
 ------------------------------------------------------------------------
 
 ## 3. Error Cannot get interface MTU on 'br0'
