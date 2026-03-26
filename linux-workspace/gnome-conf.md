@@ -34,36 +34,7 @@ nautilus -q
 
 ---
 
-## 3. Menghilangkan Menu “Recent” dari Sidebar (Hard Disable via CSS Override)
-
-GNOME tidak menyediakan opsi resmi untuk menyembunyikan item sidebar secara selektif. Jika ingin benar-benar menghilangkan tampilannya, perlu modifikasi tema atau patch Nautilus, yang tidak direkomendasikan karena bisa rusak saat update.
-
-Alternatif yang lebih aman adalah pendekatan nomor 1 (disable tracking), sehingga menu tetap ada tapi kosong.
-
----
-
-Jika yang Anda maksud adalah file manager lain (misalnya Nemo atau Thunar), mekanismenya berbeda.
-
-
-Untuk membuat shortcut aplikasi **.AppImage** di GNOME (misalnya aplikasi video editor yang dijalankan dengan `./nama-aplikasi.AppImage`), lakukan langkah berikut.
-
-1. Pindahkan file AppImage ke lokasi tetap (opsional tapi disarankan)
-
-Contoh:
-
-```
-mkdir -p ~/Applications
-mv nama-aplikasi.AppImage ~/Applications/
-chmod +x ~/Applications/nama-aplikasi.AppImage
-```
-
-Pastikan sudah executable:
-
-```
-chmod +x ~/Applications/nama-aplikasi.AppImage
-```
-
-2. Buat file shortcut (.desktop)
+## 3. Buat Shortcut Aplikasi .AppImage di GNOME
 
 Buat file:
 

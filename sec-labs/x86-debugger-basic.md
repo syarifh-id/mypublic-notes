@@ -22,4 +22,4 @@ Pada x64dbg, mengatur **exception ignore range** dari `00000000-FFFFFFFF` bertuj
 - Exception yang sebenarnya berguna untuk analisis menjadi tidak terdeteksi
 
 ## Penggunaan yang Lebih Baik:
-Lebih baik menggunakan range yang lebih spesifik, misalnya hanya mengabaikan exception pada module tertentu, daripada mengabaikan semua exception di seluruh memory space.
+L;bih baik menggunakan range yang lebih spesifik, misalnya hanya mengabaikan exception pada module tertentu, daripada mengabaikan semua exception di seluruh memory space.

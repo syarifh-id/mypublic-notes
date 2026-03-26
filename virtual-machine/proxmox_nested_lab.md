@@ -20,8 +20,24 @@ Atau: --osinfo linux2022
 
 Contoh perintah: 
 ```
-virt-install --name proxmox --ram 8192 --vcpus 4 --cpu host-passthrough --disk path=/var/lib/libvirt/images/proxmox.qcow2,size=64,format=qcow2 --cdrom /path/to/proxmox.iso --network network=default --graphics vnc --osinfo debian12
+virt-install --name proxmox --ram 8192 --vcpus 4 --cpu host-passthrough --disk path=to/.qcow2,size=64,format=qcow2,bus=virtio --cdrom /path/to/.iso --network network=default,model=virtio --graphics vnc --osinfo debian12
 ```
+
+
+optimized
+```
+virt-install \
+--name proxmox \
+--ram 8192 \
+--vcpus 4 \
+--cpu host-passthrough,+vmx \
+--disk path=/var/lib/libvirt/images/proxmox.qcow2,size=64,format=qcow2,bus=virtio,cache=none,io=native \
+--cdrom /path/to/proxmox.iso \
+--network network=default,model=virtio \
+--graphics vnc \
+--osinfo debian12
+```
+
 ------------------------------------------------------------------------
 
 ## 3. Error Cannot get interface MTU on 'br0'
