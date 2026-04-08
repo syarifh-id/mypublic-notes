@@ -358,9 +358,9 @@ Apakah kamu lebih memprioritaskan kecerdasan model (kuantitas bit tinggi) atau k
 
 ```
 ZES_ENABLE_SYSMAN=1 \
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(pwd)/Tools/llama.cpp/build/bin \
-Tools/llama.cpp/build/bin/llama-cli \
--m Tools/ai-models/Qwen2.5-Coder-3B-Instruct-Q8_0.gguf \
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/Tools/llama.cpp/build/bin \
+~/Tools/llama.cpp/build/bin/llama-cli \
+-m ~/Tools/ai-models/Qwen2.5-Coder-3B-Instruct-Q8_0.gguf \
 -ngl 99 \
 --device sycl0 \
 -p "buatkan fungsi python untuk melakukan web scraping sederhana"
