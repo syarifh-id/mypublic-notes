@@ -151,8 +151,8 @@ Memvalidasi username terhadap domain `essos.local` (`.12`) tanpa lockout, memanf
 ### Perintah
 ```bash
 nmap -p 88 --script=krb5-enum-users \
-  --script-args="krb5-enum-users.realm='essos.local',userdb=got_users.txt" \
-  192.168.56.12
+  --script-args="krb5-enum-users.realm='north.sevenkingdoms.local',userdb=users-north.txt" \
+  192.168.56.11
 ```
 
 ### Penjelasan teknis
